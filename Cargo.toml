@@ -7,6 +7,6 @@ edition = "2021"
 
 [dependencies]
 audiotags = "0.5.0"
-iced = "0.12.1"
 metadata = "0.1.8"
 rodio = "0.17.3"
+slint = "1.4.1"

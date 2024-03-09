@@ -1,4 +1,4 @@
-use audiotags::{Picture, Tag};
+use audiotags::Tag;
 use rodio::{source::Source, Decoder, OutputStream};
 use std::fs::File;
 use std::io::BufReader;
@@ -77,6 +77,7 @@ fn get_song_duration(file_path: String) -> u64 {
 }
 
 fn main() {
+
     println!("-+-+-+-+-+-+-+-+-+-");
     println!("Tutti: Music Player");
     println!("-+-+-+-+-+-+-+-+-+-");
