@@ -76,7 +76,10 @@ fn get_song_duration(file_path: String) -> u64 {
     }
 }
 
+slint::include_modules!();
 fn main() {
+
+    AppWindow::new().unwrap().run().unwrap();
 
     println!("-+-+-+-+-+-+-+-+-+-");
     println!("Tutti: Music Player");

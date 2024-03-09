@@ -1,7 +1,10 @@
 [package]
 name = "tutti"
 version = "0.1.0"
+authors = ["daksh <dakshkaul7790@gmail.com>"]
 edition = "2021"
+build = "build.rs"
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -10,3 +13,6 @@ audiotags = "0.5.0"
 metadata = "0.1.8"
 rodio = "0.17.3"
 slint = "1.4.1"
+
+[build-dependencies]
+slint-build="1.4"
