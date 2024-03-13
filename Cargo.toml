@@ -10,6 +10,7 @@ build = "build.rs"
 
 [dependencies]
 audiotags = "0.5.0"
+burn = { version = "0.12.1", features = ["wgpu"] }
 metadata = "0.1.8"
 rodio = "0.17.3"
 slint = "1.4.1"

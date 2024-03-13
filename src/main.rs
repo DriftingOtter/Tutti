@@ -1,22 +1,23 @@
 use audiotags::Tag;
-use rodio::{source::Source, Decoder, OutputStream};
+use rodio::{source::Source, Decoder, OutputStream, Sink};
 use std::fs::File;
+use std::{fs, io};
 use std::io::BufReader;
-use std::io::{self, Write};
+use std::io::Write;
 
-fn play_audio(file_path: String, song_duration: u64) -> bool {
+fn play_audio(file_path: String) -> bool {
     // Get a output stream handle to the default physical sound device
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+    let sink = Sink::try_new(&stream_handle).unwrap();
 
     let file = BufReader::new(File::open(file_path).unwrap());
     let source = Decoder::new(file).unwrap();
 
-    stream_handle
-        .play_raw(source.convert_samples())
-        .expect("Error during playing audio.");
+    sink.append(source);
 
-    // keep thread alive until end of song.
-    std::thread::sleep(std::time::Duration::from_secs(song_duration));
+    // The sound plays in a separate thread. This call will block the current thread until the sink
+    // has finished playing all its queued sounds.
+    sink.sleep_until_end();
 
     return true;
 }
@@ -76,14 +77,22 @@ fn get_song_duration(file_path: String) -> u64 {
     }
 }
 
+fn filter_songs(directory_path: String, genre: String) {
+    for file in fs::read_dir(directory_path).unwrap() {
+        println!("{}", file.unwrap().path().display());
+    }
+}
+
 slint::include_modules!();
 fn main() {
 
-    AppWindow::new().unwrap().run().unwrap();
+    //AppWindow::new().unwrap().run().unwrap();
 
     println!("-+-+-+-+-+-+-+-+-+-");
     println!("Tutti: Music Player");
     println!("-+-+-+-+-+-+-+-+-+-");
+
+    filter_songs("/home/daksh/Music".to_string(), "Rock".to_string());
 
     loop {
         let mut song_path: String = String::new();
@@ -110,8 +119,9 @@ fn main() {
             album = song_metadata.1,
             year = song_metadata.2
         );
-        println!("Duration: {}", song_duration / 60);
+        println!("Duration: {minutes}:{seconds}", minutes = song_duration / 60, seconds = song_duration % 60);
 
-        play_audio(song_path, song_duration);
+        play_audio(song_path.clone());
+
     }
 }
