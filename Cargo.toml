@@ -1,0 +1,17 @@
+[package]
+name = "tutti"
+version = "0.1.0"
+authors = ["daksh <dakshkaul7790@gmail.com>"]
+edition = "2021"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+audiotags = "0.5.0"
+metadata = "0.1.8"
+regex = "1.10.4"
+rodio = "0.17.3"
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = "1.0.115"
+
